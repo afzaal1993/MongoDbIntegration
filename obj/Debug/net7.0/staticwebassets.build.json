@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "p+fzoC1hxsKH4cLwYobeTY1dgcMWJdYGQT5V2FaPetM=",
+  "Source": "MongoDbIntegration",
+  "BasePath": "_content/MongoDbIntegration",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
