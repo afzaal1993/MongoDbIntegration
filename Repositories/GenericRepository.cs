@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDbIntegration.Models;
 using System.Linq.Expressions;
 
 namespace MongoDbIntegration.Repositories
@@ -9,13 +11,14 @@ namespace MongoDbIntegration.Repositories
         public GenericRepository(IMongoClient mongoClient, IConfiguration configuration)
         {
             var databaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
-            var collectionName = configuration.GetSection("CollectionSettings:"+typeof(T).Name + "CollectionName").Value;
+            var collectionName = configuration.GetSection("CollectionSettings:" + typeof(T).Name + "CollectionName").Value;
             var database = mongoClient.GetDatabase(databaseName);
             _collection = database.GetCollection<T>(collectionName);
         }
-        public async Task CreateAsync(T entity)
+        public async Task<ApiResponse<T>> CreateAsync(T entity)
         {
             await _collection.InsertOneAsync(entity);
+            return ApiResponse<T>.Success(entity);
         }
 
         public Task DeleteAsync(string id)
@@ -30,12 +33,20 @@ namespace MongoDbIntegration.Repositories
 
         public Task<T> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();            
         }
 
-        public Task<T> GetOneAsync(Expression<Func<T, bool>> filter)
+        public async Task<ApiResponse<T>> GetOneAsync(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            T result = await _collection.Find(filter).FirstOrDefaultAsync();
+            if (result != null)
+            {
+                return ApiResponse<T>.Success(result);
+            }
+            else
+            {
+                return ApiResponse<T>.NotFound();
+            }
         }
 
         public Task UpdateAsync(string id, T entity)

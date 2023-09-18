@@ -44,3 +44,4 @@ D:\Test\Learning\MongoDb\MongoDbIntegration\obj\Debug\net7.0\refint\MongoDbInteg
 D:\Test\Learning\MongoDb\MongoDbIntegration\obj\Debug\net7.0\MongoDbIntegration.pdb
 D:\Test\Learning\MongoDb\MongoDbIntegration\obj\Debug\net7.0\MongoDbIntegration.genruntimeconfig.cache
 D:\Test\Learning\MongoDb\MongoDbIntegration\obj\Debug\net7.0\ref\MongoDbIntegration.dll
+D:\Test\Learning\MongoDb\MongoDbIntegration\bin\Debug\net7.0\Newtonsoft.Json.dll

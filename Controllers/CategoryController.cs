@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDbIntegration.Models;
 using MongoDbIntegration.Repositories;
+using System.Net;
 
 namespace MongoDbIntegration.Controllers
 {
@@ -18,11 +19,22 @@ namespace MongoDbIntegration.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create(Category category)
+        [ProducesResponseType(typeof(ApiResponse<Category>), (int)HttpStatusCode.Created)]
+        public async Task<ActionResult<ApiResponse<Category>>> Create(Category category)
         {
-            await _category.CreateAsync(category);
+            var response = await _category.CreateAsync(category);
+            return Created("", response);
+        }
 
-            return Ok(category);
+        [Route("GetById/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse<Category>>> GetById(string id)
+        {
+            var response = await _category.GetOneAsync(x => x.Id == id);
+            if (response.Status)
+                return Ok(response);
+            else
+                return NotFound(response);
         }
     }
 }
